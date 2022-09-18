@@ -30,26 +30,26 @@ if ($a==0) {
     condition: (parenthesized_expression (binary_expression
       left: (variable_name (name))
       right: (integer)))
-    body: (compound_statement (echo_statement (encapsed_string (string)))))
+    body: (compound_statement (echo_statement (encapsed_string (string_value)))))
   (if_statement
     condition: (parenthesized_expression (binary_expression
       left: (variable_name (name))
       right: (integer)))
-    body: (compound_statement (echo_statement (encapsed_string (string))))
+    body: (compound_statement (echo_statement (encapsed_string (string_value))))
     alternative: (else_clause
-      body: (compound_statement (echo_statement (encapsed_string (string))))))
+      body: (compound_statement (echo_statement (encapsed_string (string_value))))))
   (if_statement
     condition: (parenthesized_expression (binary_expression
       left: (variable_name (name))
       right: (integer)))
-    body: (compound_statement (echo_statement (encapsed_string (string))))
+    body: (compound_statement (echo_statement (encapsed_string (string_value))))
     alternative: (else_if_clause
       condition: (parenthesized_expression (binary_expression
         left: (variable_name (name))
         right: (integer)))
-      body: (compound_statement (echo_statement (encapsed_string (string)))))
+      body: (compound_statement (echo_statement (encapsed_string (string_value)))))
     alternative: (else_clause
-      body: (compound_statement (echo_statement (encapsed_string (string)))))))
+      body: (compound_statement (echo_statement (encapsed_string (string_value)))))))
 
 ==============================
 Alternative if statements
@@ -149,7 +149,7 @@ while ($a < 10) {
       right: (integer)))
     body: (compound_statement
       (echo_statement (variable_name (name)))
-      (expression_statement (update_expression (variable_name (name)))))))
+      (expression_statement (update_expression expr: (variable_name (name)))))))
 
 ==============================
 Alternative while statements
@@ -171,13 +171,13 @@ endwhile;
     condition: (parenthesized_expression (binary_expression
       left: (variable_name (name))
       right: (integer)))
-    body: (echo_statement (update_expression (variable_name (name)))))
+    body: (echo_statement (update_expression expr: (variable_name (name)))))
   (while_statement
     condition: (parenthesized_expression (binary_expression
       left: (variable_name (name))
       right: (integer)))
     body: (colon_block
-      (echo_statement (update_expression (variable_name (name))))
+      (echo_statement (update_expression expr: (variable_name (name))))
       (echo_statement (variable_name (name))))))
 
 ==============================
@@ -196,14 +196,14 @@ endfor;
 (program
   (php_tag)
   (for_statement
-    (assignment_expression (variable_name (name)) (integer))
-    (binary_expression (variable_name (name)) (integer))
-    (update_expression (variable_name (name)))
+    initialize: (assignment_expression left: (variable_name (name)) right: (integer))
+    condition: (binary_expression left: (variable_name (name)) right: (integer))
+    increment: (update_expression expr: (variable_name (name)))
     (echo_statement (variable_name (name))))
   (for_statement
-    (assignment_expression (variable_name (name)) (integer))
-    (binary_expression (variable_name (name)) (integer))
-    (update_expression (variable_name (name)))
+    initialize: (assignment_expression left: (variable_name (name)) right: (integer))
+    condition: (binary_expression left: (variable_name (name)) right: (integer))
+    increment: (update_expression expr: (variable_name (name)))
     (echo_statement (variable_name (name)))))
 
 ==============================
@@ -233,12 +233,12 @@ switch ($a) {
     body: (switch_block
       (case_statement
         value: (integer)
-        (echo_statement (encapsed_string (string))) (break_statement))
+        (echo_statement (encapsed_string (string_value))) (break_statement))
       (case_statement
         value: (integer)
-        (echo_statement (encapsed_string (string))) (break_statement))
+        (echo_statement (encapsed_string (string_value))) (break_statement))
       (default_statement
-        (echo_statement (encapsed_string (string))) (break_statement))))
+        (echo_statement (encapsed_string (string_value))) (break_statement))))
   (text_interpolation))
 
 ==============================
@@ -289,7 +289,7 @@ include "015.inc";
 
 (program
   (php_tag)
-  (expression_statement (include_expression (encapsed_string (string)))))
+  (expression_statement (include_expression (encapsed_string (string_value)))))
 
 ==============================
 Do-while statements
@@ -308,7 +308,7 @@ do {
   (do_statement
     body: (compound_statement
       (echo_statement (variable_name (name)))
-      (expression_statement (update_expression (variable_name (name)))))
+      (expression_statement (update_expression expr: (variable_name (name)))))
     condition: (parenthesized_expression (binary_expression
       left: (variable_name (name))
       right: (integer)))))
@@ -364,7 +364,7 @@ try {
       name: (variable_name (name))
       body: (compound_statement
         (expression_statement (print_intrinsic (binary_expression
-          left: (encapsed_string (string))
+          left: (encapsed_string (string_value))
           right: (member_call_expression
             object: (variable_name (name))
             name: (name)
@@ -392,18 +392,19 @@ endforeach;
 (program
   (php_tag)
   (foreach_statement
-    (variable_name (name))
-    (subscript_expression (variable_name (name)) (integer))
+    traversable: (variable_name (name))
+    value: (subscript_expression dereferenceable: (variable_name (name)) index: (integer))
     body: (compound_statement
       (echo_statement (binary_expression
-        left: (subscript_expression (variable_name (name)) (integer))
+        left: (subscript_expression dereferenceable: (variable_name (name)) index: (integer))
         right: (encapsed_string (escape_sequence))))))
   (foreach_statement
-    (variable_name (name))
-    (pair (variable_name (name)) (variable_name (name))))
+    traversable: (variable_name (name))
+    key:  (variable_name (name)) 
+    value: (variable_name (name)))
   (foreach_statement
-    (variable_name (name))
-    (variable_name (name))
+    traversable: (variable_name (name))
+    value: (variable_name (name))
     body: (colon_block
       (echo_statement (variable_name (name)))
       (echo_statement (variable_name (name))))))
