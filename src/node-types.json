@@ -4455,7 +4455,7 @@
     "type": "subscript_expression",
     "named": true,
     "fields": {
-      "dereferencable": {
+      "dereferenceable": {
         "multiple": false,
         "required": false,
         "types": [

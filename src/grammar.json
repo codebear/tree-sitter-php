@@ -5510,7 +5510,7 @@
             "name": "object",
             "content": {
               "type": "SYMBOL",
-              "name": "_dereferencable_expression"
+              "name": "_dereferenceable_expression"
             }
           },
           {
@@ -5535,7 +5535,7 @@
             "name": "object",
             "content": {
               "type": "SYMBOL",
-              "name": "_dereferencable_expression"
+              "name": "_dereferenceable_expression"
             }
           },
           {
@@ -6042,7 +6042,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_dereferencable_expression"
+          "name": "_dereferenceable_expression"
         }
       ]
     },
@@ -6230,7 +6230,7 @@
             "name": "object",
             "content": {
               "type": "SYMBOL",
-              "name": "_dereferencable_expression"
+              "name": "_dereferenceable_expression"
             }
           },
           {
@@ -6263,7 +6263,7 @@
             "name": "object",
             "content": {
               "type": "SYMBOL",
-              "name": "_dereferencable_expression"
+              "name": "_dereferenceable_expression"
             }
           },
           {
@@ -6355,10 +6355,10 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "dereferencable",
+          "name": "dereferenceable",
           "content": {
             "type": "SYMBOL",
-            "name": "_dereferencable_expression"
+            "name": "_dereferenceable_expression"
           }
         },
         {
@@ -6418,7 +6418,7 @@
         }
       ]
     },
-    "_dereferencable_expression": {
+    "_dereferenceable_expression": {
       "type": "PREC",
       "value": 26,
       "content": {

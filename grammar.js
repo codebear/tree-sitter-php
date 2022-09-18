@@ -1023,13 +1023,13 @@ module.exports = grammar({
     ),
 
     member_access_expression: $ => prec(PREC.MEMBER, seq(
-      field('object', $._dereferencable_expression),
+      field('object', $._dereferenceable_expression),
       '->',
       $._member_name
     )),
 
     nullsafe_member_access_expression: $ => prec(PREC.MEMBER, seq(
-      field('object', $._dereferencable_expression),
+      field('object', $._dereferenceable_expression),
       '?->',
       $._member_name
     )),
@@ -1098,7 +1098,7 @@ module.exports = grammar({
       $.name,
       alias($._reserved_identifier, $.name),
       $.qualified_name,
-      $._dereferencable_expression
+      $._dereferenceable_expression
     ),
 
     relative_scope: $ => prec(PREC.SCOPE, choice(
@@ -1128,14 +1128,14 @@ module.exports = grammar({
     ),
 
     member_call_expression: $ => prec(PREC.CALL, seq(
-      field('object', $._dereferencable_expression),
+      field('object', $._dereferenceable_expression),
       '->',
       $._member_name,
       field('arguments', $.arguments)
     )),
 
     nullsafe_member_call_expression: $ => prec(PREC.CALL, seq(
-      field('object', $._dereferencable_expression),
+      field('object', $._dereferenceable_expression),
       '?->',
       $._member_name,
       field('arguments', $.arguments)
@@ -1157,14 +1157,14 @@ module.exports = grammar({
     ),
 
     subscript_expression: $ => seq(
-      field("dereferencable", $._dereferencable_expression),
+      field("dereferenceable", $._dereferenceable_expression),
       choice(
         seq('[', field("index", optional($._expression)), ']'),
         seq('{', field("index", $._expression), '}')
       )
     ),
 
-    _dereferencable_expression: $ => prec(PREC.DEREF, choice(
+    _dereferenceable_expression: $ => prec(PREC.DEREF, choice(
       $._variable,
       $.class_constant_access_expression,
       $.parenthesized_expression,
