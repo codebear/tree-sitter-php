@@ -857,7 +857,7 @@ module.exports = grammar({
     ),
     
     silence_expression: $ => 
-      seq('@', field('expr', $._expression)),
+      prec(PREC.INC, seq('@', field('expr', $._expression))),
 
 
     unary_op_expression: $ => 

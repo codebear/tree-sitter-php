@@ -32,8 +32,9 @@ class Exception_foo implements ThrowableInterface {
     (class_interface_clause (name))
     body: (declaration_list
       (property_declaration
-        (visibility_modifier)
-        (property_element (variable_name (name)) (property_initializer (encapsed_string (string_value)))))
+        modifiers: (visibility_modifier)
+        properties: (property_element name: (variable_name (name)) 
+          initializer: (encapsed_string (string_value))))
       (method_declaration
         (visibility_modifier)
         name: (name)
@@ -141,7 +142,7 @@ class foo {
 					name: (variable_name (name))))
 	    body: (compound_statement
 				(expression_statement (reference_assignment_expression
-	        left: (subscript_expression (variable_name (name)) (string (string_value)))
+	        left: (subscript_expression dereferenceable: (variable_name (name)) index: (string (string_value)))
 	        right: (variable_name (name))))
 				(expression_statement (assignment_expression
 	        left: (member_access_expression
@@ -149,7 +150,7 @@ class foo {
 						name: (name))
 	        right: (variable_name (name))))
 				(expression_statement (member_call_expression
-	        object: (subscript_expression (variable_name (name)) (string (string_value)))
+	        object: (subscript_expression dereferenceable: (variable_name (name)) index: (string (string_value)))
 	        name: (name)
 	        arguments: (arguments)))))
 	  (method_declaration
@@ -157,7 +158,7 @@ class foo {
 	    parameters: (formal_parameters)
 	    body: (compound_statement
 	      (expression_statement (assignment_expression
-	        left: (subscript_expression (subscript_expression (variable_name (name)) (string (string_value))))
+	        left: (subscript_expression dereferenceable: (subscript_expression dereferenceable: (variable_name (name)) index: (string (string_value))))
 	        right: (member_access_expression
 						object: (variable_name (name))
 						name: (name)))))))))
@@ -397,15 +398,15 @@ function a() {
     body: (declaration_list
       (const_declaration
         attributes: (attribute_list (attribute_group (attribute (name))))
-        (const_element (name) (string (string_value)))
+        (const_element name: (name) value: (string (string_value)))
       )
 
       (property_declaration
         attributes: (attribute_list (attribute_group (attribute (name))))
-        (visibility_modifier)
+        modifiers: (visibility_modifier)
         type: (union_type (primitive_type))
-        (property_element (variable_name (name))
-          (property_initializer (string (string_value)))
+        properties: (property_element name: (variable_name (name))
+          initializer: (string (string_value))
         )
       )
       (method_declaration
@@ -417,7 +418,7 @@ function a() {
                 (argument (encapsed_string (string_value)))
                 (argument
                   (array_creation_expression
-                    (array_element_initializer (encapsed_string (string_value)))
+                    (array_element_initializer value: (encapsed_string (string_value)))
                   )
                 )
               )
@@ -463,8 +464,8 @@ function a() {
           parameters: (arguments
             (argument
               (class_constant_access_expression
-                (name)
-                (name)
+                class: (name)
+                constant: (name)
               )
             )
           )
@@ -477,8 +478,8 @@ function a() {
             (argument
               (array_creation_expression
                 (array_element_initializer
-                  (encapsed_string (string_value))
-                  (encapsed_string (string_value))
+                  key: (encapsed_string (string_value))
+                  value: (encapsed_string (string_value))
                 )
               )
             )
@@ -576,11 +577,11 @@ function a() {
             )
           )
         )
-        (visibility_modifier)
+        modifiers: (visibility_modifier)
         type: (union_type (primitive_type))
-        (property_element
-          (variable_name (name))
-          (property_initializer (string (string_value)))
+        properties: (property_element
+          name: (variable_name (name))
+          initializer: (string (string_value))
         )
       )
     )

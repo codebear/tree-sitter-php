@@ -144,7 +144,7 @@ echo "hi";
 
 
 =======================================
-Singel line comment without any content
+Single line comment without any content
 =======================================
 
 <?php
@@ -163,7 +163,7 @@ if ( ! function_exists('xml_parser_create') ) {
   (if_statement
     condition: (parenthesized_expression
       (unary_op_expression
-        (function_call_expression
+        expr: (function_call_expression
           function: (name)
           arguments: (arguments (argument (string (string_value))))
         )

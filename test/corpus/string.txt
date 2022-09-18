@@ -820,12 +820,12 @@ EOF;
           name: (name)
         )
         (subscript_expression
-          (member_call_expression
+          dereferenceable: (member_call_expression
             object: (variable_name (name))
             name: (name)
             arguments: (arguments)
           )
-          (integer)
+          index: (integer)
         )
         (string_value)
       )

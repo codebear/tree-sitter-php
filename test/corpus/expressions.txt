@@ -45,7 +45,7 @@ $a ** $c = $b;
     (exponentiation_expression
       left: (variable_name (name))
       right: (unary_op_expression
-        (variable_name (name))
+        expr: (variable_name (name))
       )
     )
   )
@@ -239,18 +239,18 @@ list(, $name1) = $data[0];
   (php_tag)
   (expression_statement
     (assignment_expression
-      (variable_name (name))
-      (array_creation_expression
+      left: (variable_name (name))
+      right: (array_creation_expression
         (array_element_initializer
-          (array_creation_expression
-            (array_element_initializer (integer))
-            (array_element_initializer (string (string_value)))
+          value: (array_creation_expression
+            (array_element_initializer value: (integer))
+            (array_element_initializer value: (string (string_value)))
           )
         )
         (array_element_initializer
-          (array_creation_expression
-            (array_element_initializer (integer))
-            (array_element_initializer (string (string_value)))
+          value: (array_creation_expression
+            (array_element_initializer value: (integer))
+            (array_element_initializer value: (string (string_value)))
           )
         )
       )
@@ -259,89 +259,89 @@ list(, $name1) = $data[0];
   (comment)
   (expression_statement
     (assignment_expression
-      (list_literal
+      left: (list_literal
         (variable_name (name))
         (variable_name (name))
       )
-      (subscript_expression
-        (variable_name (name))
-        (integer)
-      )
-    )
-  )
-  (comment)
-  (expression_statement
-    (assignment_expression
-      (list_literal
-        (variable_name (name))
-        (variable_name (name))
-      )
-      (subscript_expression
-        (variable_name (name))
-        (integer)
+      right: (subscript_expression
+        dereferenceable: (variable_name (name))
+        index: (integer)
       )
     )
   )
   (comment)
   (expression_statement
     (assignment_expression
-      (list_literal
-        (variable_name (name))
-      )
-      (subscript_expression
-        (variable_name (name))
-        (integer)
-      )
-    )
-  )
-  (comment)
-  (expression_statement
-    (assignment_expression
-      (list_literal
+      left: (list_literal
         (variable_name (name))
         (variable_name (name))
       )
-      (subscript_expression
-        (variable_name (name))
-        (integer)
+      right: (subscript_expression
+        dereferenceable: (variable_name (name))
+        index: (integer)
       )
     )
   )
   (comment)
   (expression_statement
     (assignment_expression
-      (list_literal
-        (variable_name (name))
+      left: (list_literal
         (variable_name (name))
       )
-      (subscript_expression
-        (variable_name (name))
-        (integer)
+      right: (subscript_expression
+        dereferenceable: (variable_name (name))
+        index: (integer)
       )
     )
   )
   (comment)
   (expression_statement
     (assignment_expression
-      (list_literal
+      left: (list_literal
+        (variable_name (name))
         (variable_name (name))
       )
-      (subscript_expression
+      right: (subscript_expression
+        dereferenceable: (variable_name (name))
+        index: (integer)
+      )
+    )
+  )
+  (comment)
+  (expression_statement
+    (assignment_expression
+      left: (list_literal
         (variable_name (name))
-        (integer)
+        (variable_name (name))
+      )
+      right: (subscript_expression
+        dereferenceable: (variable_name (name))
+        index: (integer)
+      )
+    )
+  )
+  (comment)
+  (expression_statement
+    (assignment_expression
+      left: (list_literal
+        (variable_name (name))
+      )
+      right: (subscript_expression
+        dereferenceable: (variable_name (name))
+        index: (integer)
       )
     )
   )
   (expression_statement
     (assignment_expression
-      (list_literal
+      left: (list_literal
         (variable_name (name))
         (variable_name (name))
       )
-      (scoped_call_expression
-        (name)
-        (name)
-        (arguments
+      right: (scoped_call_expression
+        scope: (name)
+        name: (name)
+        arguments: (arguments
           (argument
             (variable_name (name))
           )
@@ -513,7 +513,7 @@ $i .= "a" . "b";
   (text_interpolation))
 
 =======================================
-Nested assignemnts
+Nested assignments
 ==============================
 
 <?php
@@ -525,12 +525,12 @@ $c = $d[0] = $d[2] = $i;
   (php_tag)
   (expression_statement
     (assignment_expression
-      (variable_name (name))
-      (assignment_expression
-        (subscript_expression (variable_name (name)) (integer))
-        (assignment_expression
-          (subscript_expression (variable_name (name)) (integer))
-          (variable_name (name)))))))
+      left: (variable_name (name))
+      right: (assignment_expression
+        left: (subscript_expression dereferenceable: (variable_name (name)) index: (integer))
+        right: (assignment_expression
+          left: (subscript_expression dereferenceable: (variable_name (name)) index: (integer))
+          right: (variable_name (name)))))))
 
 ===============================================
 All binary op precedence levels
@@ -778,7 +778,7 @@ throw $exception ??= new Exception();
       left: (variable_name (name))
       right: (conditional_expression
         condition: (unary_op_expression
-          (function_call_expression
+          expr: (function_call_expression
             function: (name)
             arguments: (arguments (argument (variable_name (name))))
           )
@@ -1306,144 +1306,142 @@ class A {
   (php_tag)
   (expression_statement
     (reference_assignment_expression
-      (variable_name (name))
-      (object_creation_expression (name))
+      left: (variable_name (name))
+      right: (object_creation_expression (name))
     )
   )
   (expression_statement
     (reference_assignment_expression
-      (variable_name (name))
-      (variable_name (name))
+      left: (variable_name (name))
+      right: (variable_name (name))
     )
   )
   (function_definition
-    (name)
-    (formal_parameters
+    name: (name)
+    parameters: (formal_parameters
       (simple_parameter
-        (variable_name (name))
+        name: (variable_name (name))
       )
       (variadic_parameter
-        (reference_modifier)
-        (variable_name (name))
+        reference_modifier: (reference_modifier)
+        name: (variable_name (name))
       )
     )
-    (compound_statement)
+   body: (compound_statement)
   )
   (function_definition
-    (name)
-    (formal_parameters
+    name: (name)
+    parameters: (formal_parameters
       (simple_parameter
-        (variable_name (name))
+        name: (variable_name (name))
       )
       (variadic_parameter
-        (union_type (named_type (name)))
-        (reference_modifier)
-        (variable_name (name))
+        type: (union_type (named_type (name)))
+        reference_modifier: (reference_modifier)
+        name: (variable_name (name))
       )
     )
-    (compound_statement)
+    body: (compound_statement)
   )
   (expression_statement
     (arrow_function
       (static_modifier)
-      (formal_parameters
+      parameters: (formal_parameters
         (simple_parameter
-          (reference_modifier)
-          (variable_name (name))
+          reference_modifier: (reference_modifier)
+          name: (variable_name (name))
         )
       )
-      (variable_name (name))
+      body: (variable_name (name))
     )
   )
   (expression_statement
     (arrow_function
-      (reference_modifier)
-      (formal_parameters
+      reference_modifier: (reference_modifier)
+      parameters: (formal_parameters
         (simple_parameter
-          (variable_name (name))
+          name: (variable_name (name))
         )
       )
-      (variable_name (name))
+      body: (variable_name (name))
     )
   )
   (expression_statement
     (anonymous_function_creation_expression
-      (formal_parameters)
+      parameters: (formal_parameters)
       (anonymous_function_use_clause
         (variable_name (name))
         (by_ref (variable_name (name)))
       )
-      (compound_statement)
+      body: (compound_statement)
     )
   )
   (expression_statement
     (anonymous_function_creation_expression
-      (reference_modifier)
-      (formal_parameters
+      reference_modifier: (reference_modifier)
+      parameters: (formal_parameters
         (simple_parameter
-          (variable_name (name))
+          name: (variable_name (name))
         )
       )
-      (compound_statement)
+      body: (compound_statement)
     )
   )
   (foreach_statement
-    (variable_name (name))
-    (by_ref (variable_name (name)))
-    (compound_statement)
+    traversable: (variable_name (name))
+    value: (by_ref (variable_name (name)))
+    body: (compound_statement)
   )
   (foreach_statement
-    (variable_name (name))
-    (pair
-      (variable_name (name))
-      (by_ref (variable_name (name)))
-    )
-    (compound_statement)
+    traversable: (variable_name (name))
+    key: (variable_name (name))
+    value: (by_ref (variable_name (name)))
+    body: (compound_statement)
   )
   (expression_statement
     (function_call_expression
-      (name)
-      (arguments
+      function: (name)
+      arguments: (arguments
         (argument
-          (reference_modifier)
+          reference_modifier: (reference_modifier)
           (variable_name (name))
         )
       )
     )
   )
   (function_definition
-    (name)
-    (formal_parameters
+    name: (name)
+    parameters: (formal_parameters
       (simple_parameter
-        (reference_modifier)
-        (variable_name (name))
+        reference_modifier: (reference_modifier)
+        name: (variable_name (name))
       )
     )
-    (compound_statement)
+    body: (compound_statement)
   )
   (function_definition
-    (reference_modifier)
-    (name)
-    (formal_parameters
+    reference_modifier: (reference_modifier)
+    name: (name)
+    parameters: (formal_parameters
       (simple_parameter
-        (variable_name (name))
+        name: (variable_name (name))
       )
     )
-    (compound_statement)
+    body: (compound_statement)
   )
   (expression_statement
     (reference_assignment_expression
-      (variable_name (name))
-      (subscript_expression
-        (variable_name (name))
-        (binary_expression
-          (string (string_value))
-          (function_call_expression
-            (qualified_name
+      left: (variable_name (name))
+      right: (subscript_expression
+        dereferenceable: (variable_name (name))
+        index: (binary_expression
+          left: (string (string_value))
+          right: (function_call_expression
+            function: (qualified_name
               (namespace_name_as_prefix)
               (name)
             )
-            (arguments
+            arguments: (arguments
               (argument (variable_name (name)))
             )
           )
@@ -1453,76 +1451,76 @@ class A {
   )
   (expression_statement
     (array_creation_expression
-      (array_element_initializer (string (string_value)))
-      (array_element_initializer (by_ref (variable_name (name))))
-      (array_element_initializer (string (string_value)) (string (string_value)))
-      (array_element_initializer (string (string_value)) (by_ref (variable_name (name))))
+      (array_element_initializer value: (string (string_value)))
+      (array_element_initializer value: (by_ref (variable_name (name))))
+      (array_element_initializer key: (string (string_value)) value: (string (string_value)))
+      (array_element_initializer key: (string (string_value)) value: (by_ref (variable_name (name))))
     )
   )
   (expression_statement
     (array_creation_expression
-      (array_element_initializer (by_ref (variable_name (name))))
+      (array_element_initializer value: (by_ref (variable_name (name))))
     )
   )
   (expression_statement
     (assignment_expression
-      (list_literal
+      left: (list_literal
         (by_ref
           (variable_name (name))
         )
       )
-      (variable_name (name))
+      right: (variable_name (name))
     )
   )
   (expression_statement
     (assignment_expression
-      (list_literal
+      left: (list_literal
         (string (string_value))
         (by_ref (variable_name (name)))
       )
-      (variable_name (name))
+      right: (variable_name (name))
     )
   )
   (expression_statement
     (assignment_expression
-      (list_literal
+      left: (list_literal
         (by_ref (variable_name (name)))
       )
-      (variable_name (name))
+      right: (variable_name (name))
     )
   )
   (expression_statement
     (assignment_expression
-      (list_literal
+      left: (list_literal
         (string (string_value))
         (by_ref (variable_name (name)))
       )
-      (variable_name (name))
+      right: (variable_name (name))
     )
   )
   (class_declaration
-    (name)
-    (declaration_list
+    name: (name)
+    body: (declaration_list
       (method_declaration
-        (name)
-        (formal_parameters)
-        (compound_statement
+        name: (name)
+        parameters: (formal_parameters)
+        body: (compound_statement
           (expression_statement
             (assignment_expression
-              (member_access_expression
-                (variable_name (name))
-                (name)
+              left: (member_access_expression
+                object: (variable_name (name))
+                name: (name)
               )
-              (integer)
+              right: (integer)
             )
           )
           (return_statement
             (array_creation_expression
               (array_element_initializer
-                (by_ref
+                value: (by_ref
                   (member_access_expression
-                    (variable_name (name))
-                    (name)
+                    object: (variable_name (name))
+                    name: (name)
                   )
                 )
               )
