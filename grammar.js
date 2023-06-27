@@ -87,7 +87,6 @@ module.exports = grammar({
     $._callable_expression,
     $._foreach_value,
     $._literal,
-    $._intrinsic,
     $._class_type_designator,
     $._variable_name,
   ],
@@ -263,7 +262,7 @@ module.exports = grammar({
       optional(field('attributes', $.attribute_list)),
       keyword('enum'),
       field('name', $.name),
-      optional(seq(':', $._type)),
+      optional(seq(':', alias(choice('string', 'int'), $.primitive_type))),
       optional($.class_interface_clause),
       field('body', $.enum_declaration_list)
     )),
@@ -290,7 +289,7 @@ module.exports = grammar({
 
     class_declaration: $ => prec.right(seq(
       optional(field('attributes', $.attribute_list)),
-      optional(field('modifier', choice($.final_modifier, $.abstract_modifier))),
+      optional(field('modifier', choice($.final_modifier, $.abstract_modifier, $.readonly_modifier))),
       keyword('class'),
       field('name', $.name),
       optional($.base_clause),
@@ -517,8 +516,9 @@ module.exports = grammar({
       'void',
       'mixed',
       'static', // only legal as a return type
-      'false', // only legal in unions
-      'null', // only legal in unions
+      'false',
+      'null',
+      'true',
     ),
 
     cast_type: $ => choice(
@@ -758,7 +758,7 @@ module.exports = grammar({
     match_block: $ => prec.left(
       seq(
         '{',
-        commaSep1(
+        commaSep(
           choice(
             $.match_conditional_expression,
             $.match_default_expression
