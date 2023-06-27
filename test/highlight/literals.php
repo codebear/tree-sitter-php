@@ -3,7 +3,7 @@
 
 echo <<<OMG
   something
-OMG
+OMG;
 // <- string
 
 echo true, TRUE, false, FALSE
@@ -14,3 +14,6 @@ echo true, TRUE, false, FALSE
 
 echo PI_314
 //   ^ constant
+
+echo __DIR__
+//    ^ constant.builtin
